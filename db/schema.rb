@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_07_01_195733) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "constellations", force: :cascade do |t|
     t.string "abbreviation"
     t.string "name", null: false
