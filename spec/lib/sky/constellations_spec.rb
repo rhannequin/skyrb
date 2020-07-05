@@ -6,7 +6,7 @@ require "csv"
 describe Sky::Constellations do
   subject { described_class.new }
 
-  describe "#load" do
+  describe "#load!" do
     let(:headers) { %w[abbr latin_name] }
     let(:entries) do
       [
@@ -31,13 +31,13 @@ describe Sky::Constellations do
     end
 
     it "creates new constellations" do
-      expect { subject.load }.to(
+      expect { subject.load! }.to(
         change { ::Constellation.count }.by(entries.size)
       )
     end
 
     it "inserts the correct values" do
-      subject.load
+      subject.load!
       first_line = entries.first
       constellation = ::Constellation.last
       expect(constellation.abbreviation).to eq(first_line.first)

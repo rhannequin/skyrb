@@ -5,7 +5,7 @@ require "csv"
 class Sky::Constellations
   FILE_PATH = Rails.root.join("vendor/constellations/names.csv")
 
-  def load
+  def load!
     records = constellations.map do |constellation|
       ::Constellation.new(
         abbreviation: constellation["abbr"],
