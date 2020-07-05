@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_195733) do
+ActiveRecord::Schema.define(version: 2020_07_03_210520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,24 @@ ActiveRecord::Schema.define(version: 2020_07_01_195733) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["abbreviation"], name: "index_constellations_on_abbreviation"
+  end
+
+  create_table "stars", force: :cascade do |t|
+    t.bigint "constellation_id", null: false
+    t.integer "hip_id"
+    t.integer "hd_id"
+    t.integer "hr_id"
+    t.integer "gl_id"
+    t.string "name"
+    t.decimal "right_ascension"
+    t.decimal "declination"
+    t.decimal "apparent_magnitude"
+    t.decimal "asbolute_magnitude"
+    t.decimal "luminosity"
+    t.decimal "distance"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["constellation_id"], name: "index_stars_on_constellation_id"
   end
 
 end
