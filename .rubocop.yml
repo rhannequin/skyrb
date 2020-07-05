@@ -4,6 +4,11 @@ require:
 
 AllCops:
   TargetRubyVersion: 2.7.1
+  Exclude:
+    - 'db/**/*'
+
+Rails:
+  Enabled: true
 
 Style/StringLiteralsInInterpolation:
   Enabled: false
