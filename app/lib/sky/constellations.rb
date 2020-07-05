@@ -7,13 +7,13 @@ class Sky::Constellations
 
   def load
     records = constellations.map do |constellation|
-      {
+      ::Constellation.new(
         abbreviation: constellation["abbr"],
         name: constellation["latin_name"],
-      }
+      )
     end
 
-    ::Constellation.create(records)
+    ::Constellation.import!(records)
   end
 
   private
