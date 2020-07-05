@@ -14,7 +14,7 @@ class CreateStars < ActiveRecord::Migration[6.0]
       t.decimal :apparent_magnitude
       t.decimal :asbolute_magnitude
       t.decimal :luminosity
-      t.decimal :distance # in km
+      t.decimal :distance # in m
 
       t.timestamps
     end
