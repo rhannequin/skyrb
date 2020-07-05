@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_210520) do
+ActiveRecord::Schema.define(version: 2020_07_05_222549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "asterism_pairs", force: :cascade do |t|
+    t.bigint "constellation_id", null: false
+    t.integer "star1_id", null: false
+    t.integer "star2_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["constellation_id"], name: "index_asterism_pairs_on_constellation_id"
+  end
 
   create_table "constellations", force: :cascade do |t|
     t.string "abbreviation"
