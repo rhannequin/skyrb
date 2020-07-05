@@ -5,7 +5,7 @@ require "csv"
 class Sky::HygDatabase
   FILE_PATH = Rails.root.join("vendor/hyg/hygdata_v3.csv")
   AVOIDED_STAR_NAMES = %w[Sol].freeze
-  MAX_MAGNITUDE = 6.5
+  MAX_MAGNITUDE = 7
   PARSEC_IN_METERS = 30_856_775_814_913_673
 
   def load!
@@ -19,7 +19,7 @@ class Sky::HygDatabase
 
       ::Star.new(
         constellation_id: constellation.id,
-        hip_id: star["hyp"],
+        hip_id: star["hip"],
         hd_id: star["hd"],
         hr_id: star["hr"],
         gl_id: star["gl"],
