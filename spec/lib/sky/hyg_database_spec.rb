@@ -6,12 +6,16 @@ require "csv"
 describe Sky::HygDatabase do
   subject { described_class.new }
 
-  describe "#parse" do
+  describe "#load!" do
     let(:name) { "Sirius" }
-    let(:const) { "CMa" }
+    let(:const) { constellation.abbreviation }
     let(:ra) { 6.752481 }
     let(:dec) { -16.716116 }
     let(:mag) { -1.440 }
+
+    let(:constellation) do
+      FactoryBot.create(:constellation, abbreviation: "CMa")
+    end
 
     let(:headers) do
       %w[
@@ -48,19 +52,32 @@ describe Sky::HygDatabase do
       )
     end
 
-    it "parses values correctly" do
-      star = subject.parse.last
-      expect(star.proper).to eq(name)
-      expect(star.con).to eq(const)
-      expect(star.ra).to eq(ra)
-      expect(star.dec).to eq(dec)
+    it "doesn't fail" do
+      expect { subject.load! }.not_to raise_error
+    end
+
+    it "creates the star" do
+      expect { subject.load! }.to(change { Star.count }.by(1))
+      created_star = Star.last
+      expect(created_star.name).to eq(name)
+      expect(created_star.right_ascension).to eq(ra)
+      expect(created_star.declination).to eq(dec)
+      expect(created_star.apparent_magnitude).to eq(mag)
     end
 
     context "when magnitude is too high" do
       let(:mag) { described_class::MAX_MAGNITUDE + 1 }
 
       it "ignore the star" do
-        expect(subject.parse).to be_empty
+        expect { subject.load! }.not_to(change { Star.count })
+      end
+    end
+
+    context "when the star is part of the avoided stars" do
+      let(:name) { described_class::AVOIDED_STAR_NAMES.first }
+
+      it "ignore the star" do
+        expect { subject.load! }.not_to(change { Star.count })
       end
     end
   end
