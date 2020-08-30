@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_222549) do
+ActiveRecord::Schema.define(version: 2020_08_30_200954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 2020_07_05_222549) do
     t.index ["abbreviation"], name: "index_constellations_on_abbreviation"
   end
 
+  create_table "dark_sky_objects", force: :cascade do |t|
+    t.bigint "constellation_id", null: false
+    t.integer "ngc_id"
+    t.integer "ic_id"
+    t.integer "messier_id"
+    t.integer "category"
+    t.decimal "right_ascension"
+    t.decimal "declination"
+    t.string "hubble_type"
+    t.index ["constellation_id"], name: "index_dark_sky_objects_on_constellation_id"
+  end
+
   create_table "stars", force: :cascade do |t|
     t.bigint "constellation_id", null: false
     t.integer "hip_id"
@@ -50,4 +62,5 @@ ActiveRecord::Schema.define(version: 2020_07_05_222549) do
     t.index ["constellation_id"], name: "index_stars_on_constellation_id"
   end
 
+  add_foreign_key "dark_sky_objects", "constellations"
 end
