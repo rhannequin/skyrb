@@ -7,7 +7,6 @@ Rails-based API providing data about bright stars, contellations, Messier and NG
 ## Sources
 
 - HYG Database `vendor/hygdata_v3.csv` comes from [astronexus/HYG-Database](https://github.com/astronexus/HYG-Database)
-- Constellation boudaries `vendor/constellations/boundaries.dat` comes from [Stellarium/stellarium](https://github.com/Stellarium/stellarium)
 - Constellation star mapping `vendor/constellations/constellationships.dat` comes from [Stellarium/stellarium](https://github.com/Stellarium/stellarium)
 - NGC `vendor/ngc.csv` comes from [mattiaverga/OpenNGC](https://github.com/mattiaverga/OpenNGC)
 
@@ -28,8 +27,11 @@ $ bundle e rails db:prepare
 ```rb
 # bundle e rails c
 
-Sky::Constellations.new.load!
-Sky::HygDatabase.new.load!
+Sky::Constellations.new.load!  # Loads constellations
+Sky::HygDatabase.new.load!     # Loads stars from HYG database
+Sky::Asterisms.new.load!       # Loads constellation asterisms
+Sky::Ngc::ProcessData.process! # Processes OpenNGC data source to clean it
+Sky::Ngc::Import.new.load!     # Imports dark sky objects from OpenNGC
 ```
 
 ## CI
